@@ -1,4 +1,5 @@
-﻿using System.Runtime.Versioning;
+﻿using System.Text;
+using System.Runtime.Versioning;
 using System.Globalization;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.ObjectModel;
@@ -29,17 +30,54 @@ namespace Clase1
             // gerente.llenarVendedores(gerente.getVendedores);
             // jornadaDeVentas(gerente.getVendedores);
             // gerente.cerrar();
+
+
+            //--------------------Ejercicio numero 4 practica 4
+            Teacher profesor=new Teacher();
             int contador=0;
-            while (contador!=20)
-            {
-                Alumno alum=new Alumno("gonzalo",36648215,6383,8,10);
-                Console.WriteLine(alum.responderPregunta(3));
-                Console.WriteLine(alum.mostrarCalificacion());
-                contador++;
+            int contador1=0;
+            while (contador!=10)
+            {   
+                
+                GeneradorDeDatosAleatorios gen=new GeneradorDeDatosAleatorios();
+                Alumno alum=new Alumno(gen.stringAleatorio(5),gen.numeroAleatorio(9999999),gen.numeroAleatorio(9999),gen.numeroAleatorio(10),gen.numeroAleatorio(10));
+                IAlumno alumnoDeco=crearAlumnoDecoradoConLegajoLetrasPromocionIndiceYAsteriscos((IAlumno)alum);
+                AlumnoAdapter alumA=new AlumnoAdapter(alumnoDeco);
+                profesor.goToClass(alumA);
+                contador ++;
             }
+            while (contador1!=10)
+            {
+                FabricaMejoresAlumnos fabrica=new FabricaMejoresAlumnos();
+                AlumnoMuyEstudioso alumno=fabrica.crearAleatorio();
+                IAlumno alumnoDeco=crearAlumnoDecoradoConLegajoLetrasPromocionIndiceYAsteriscos((IAlumno)alumno);
+                AlumnoAdapter alumA=new AlumnoAdapter(alumnoDeco);
+                profesor.goToClass(alumA); 
+                contador1++;  
+            }
+            profesor.teachingAClass();
+
+
+            // GeneradorDeDatosAleatorios gene=new GeneradorDeDatosAleatorios();
+            
+            // Alumno alum1=new Alumno(gene.stringAleatorio(5),gene.numeroAleatorio(999999),gene.numeroAleatorio(9999),gene.numeroAleatorio(10),gene.numeroAleatorio(10));
+            // IAlumno alumm=alum1;
+            // alumm=new DecodarorLegajo(alum1);
+           
+            // alumm=new DecoradorLetras(alumm);
+            //  alumm=new DecoradorAsteriscos(alumm);
+            // Console.WriteLine(alumm.mostrarCalificacion());
+
+
+
+
 
         }
+
         //metodos
+        //Ejercicio 7 pracica 4
+
+        
 
         //ejercicio 6 .   practica 3
         public static Coleccionable llenar(Coleccionable coleccion,int clase){
@@ -66,7 +104,7 @@ namespace Clase1
             }
            
         }
-
+        //--------------Ejercicio practica 3
         public static Coleccionable jornadaDeVentas(Coleccionable coleccion){
             int cantidad=coleccion.cuantos();
             Pila pila=(Pila)coleccion;    
@@ -113,9 +151,38 @@ namespace Clase1
                 ((Alumno)iterador.actual()).cambiarEstrategia(_estrategia);
                 iterador.siguiente();
             }
+        }    
+
+
+        //creadores de deocradores  
+        static IAlumno crearAlumnoDecorado(IAlumno parametro)
+        {
+            return parametro;
         }
 
-        
+        static IAlumno crearAlumnoDecoradoConLegajo(IAlumno parametro)
+        {
+            IAlumno alumno = crearAlumnoDecorado(parametro);
+            return new DecodarorLegajo(alumno);
+        }
+
+        static IAlumno crearAlumnoDecoradoConLegajoYLetras(IAlumno parametro)
+        {
+            IAlumno alumno = crearAlumnoDecoradoConLegajo(parametro);
+            return new DecoradorLetras(alumno);
+        }
+
+        static IAlumno crearAlumnoDecoradoConLegajoLetrasYPromocion(IAlumno parametro)
+        {
+            IAlumno alumno = crearAlumnoDecoradoConLegajoYLetras(parametro);
+            return new DecoradorPromocion(alumno);
+        }
+
+        public static IAlumno crearAlumnoDecoradoConLegajoLetrasPromocionIndiceYAsteriscos(IAlumno parametro)
+        {
+            IAlumno alumno = crearAlumnoDecoradoConLegajoLetrasYPromocion(parametro);
+            return new DecoradorAsteriscos(alumno);
+        }
 
         
     }

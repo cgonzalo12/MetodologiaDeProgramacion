@@ -11,7 +11,8 @@ namespace Clase1
 
         }
         public override int responderPregunta(int pregrunta){
-            return 3;
+            int resp=pregrunta%3;
+            return resp;
         }
 
     }

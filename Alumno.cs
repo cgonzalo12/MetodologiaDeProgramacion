@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Clase1
 {
-    public class Alumno:Persona
+    public class Alumno:Persona,IAlumno
     {
         private int legajo;
         private int promedio;
         private int calificacion;
         private EstrategiaAlumno estrategiaAlum;
+
+        private AdicionalDecorador decorador;
         //constructor
 
         public Alumno(string _nombre,int _dni,int _legajo,int _promedio,int _calificacion):base(_nombre,_dni){
@@ -22,38 +24,49 @@ namespace Clase1
         }
 
         //get
-
-        public int getCalificacion{
-            get{return this.calificacion;}
+        public int setCalifica{
+            set{calificacion=value;}
         }
-        public int setCalificacion{
-            set{this.calificacion = value;}
+        public int getCalifica{
+            get{return calificacion;}
         }
-        public EstrategiaAlumno SetEstrategiaAlum{
-            set{estrategiaAlum = value;}
+        public void SetEstrategiaAlum(EstrategiaAlumno est){
+            this.estrategiaAlum=est;
         }
-        public EstrategiaAlumno GetEstrategiaAlumno{
-            get{return estrategiaAlum;}
+        public EstrategiaAlumno GetEstrategiaAlumno(){
+            return this.estrategiaAlum;
         }
-        public int getLegajo{
-            get{return legajo;}
+            
+        
+        public int getLegajo(){
+            return this.legajo;
         }
-        public int getPromedio{
-            get{return promedio;}
+        public int getPromedio(){
+            return this.promedio;
         }
 
         //metodos
+        
+        public void setCalificacion(int califica){
+            this.calificacion=califica;
+        }
+        public string getNombre(){
+            return this.nombre;
+        }
+        public int getCalificacion(){
+            return this.calificacion;
+        }
         public override string ToString()
         {
-            return "\n Nombre: "+this.getNombre+" \n DNI: "+this.getDNI+"\n Legajo: "+this.getLegajo+"\n Promedio: "+this.getPromedio+"\n calificacion: "+this.calificacion;
+            return "\n Nombre: "+this.getNombre()+" \n DNI: "+this.getDNI()+"\n Legajo: "+this.getLegajo()+"\n Promedio: "+this.getPromedio()+"\n calificacion: "+this.mostrarCalificacion();
         }
         public void cambiarEstrategia(EstrategiaAlumno _estrategia){
             this.estrategiaAlum=_estrategia;
         }
         
         public override bool sosIgual(Comparable comparable){
-            Alumno _alumno=(Alumno)comparable;
-            if (estrategiaAlum.datoComparacion(this)==estrategiaAlum.datoComparacion(_alumno))
+            IAlumno alumno=(IAlumno)comparable;
+            if (estrategiaAlum.datoComparacion(this)==estrategiaAlum.datoComparacion(alumno))
             {
                 return true;   
             }else
@@ -62,8 +75,8 @@ namespace Clase1
             }
         }
         public override bool sosMayor(Comparable comparable){
-            Alumno _alumno=(Alumno)comparable;
-            if (this.estrategiaAlum.comparacion(this,_alumno)==this)
+            IAlumno alumno=(IAlumno)comparable; 
+            if (estrategiaAlum.datoComparacion(this)>estrategiaAlum.datoComparacion(alumno))
             {
                 return true;   
             }else
@@ -72,13 +85,13 @@ namespace Clase1
             }
         }
         public override bool sosMenor(Comparable comparable){
-            Alumno _alumno=(Alumno)comparable;
-            if (this.estrategiaAlum.comparacion(this,_alumno)==this)
+            IAlumno alumno=(IAlumno)comparable; 
+            if (estrategiaAlum.datoComparacion(this)<estrategiaAlum.datoComparacion(alumno))
             {
-                return false;   
+                return true;   
             }else
             {
-                return true;
+                return false;
             }
         }
 
@@ -88,8 +101,9 @@ namespace Clase1
             return random.Next(1,4);
         }
         public string mostrarCalificacion(){
-            string respuesta=this.nombre+"    "+this.getCalificacion;
+            string respuesta=this.nombre+"    "+this.getCalificacion();
             return respuesta;
         }
+        
     }
 }

@@ -56,7 +56,7 @@ namespace Clase1
         }
          public override string ToString()
         {
-            return "\n Nombre: "+this.getNombre+" \n DNI: "+this.getDNI+"\n Sueldo: "+this.getSueldoBAsico+"\n Bonus: "+this.getBonus;
+            return "\n Nombre: "+this.getNombre+" \n DNI: "+this.getDNI()+"\n Sueldo: "+this.getSueldoBAsico+"\n Bonus: "+this.getBonus;
         }
         //metodos de comparable
         public override bool sosIgual(Comparable _comparable)

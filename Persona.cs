@@ -10,53 +10,38 @@ namespace Clase1
         //atributos
         protected string nombre;
         private int dni;
-
+        public Comparable compara;
         //constructor
         public Persona(string _nombre,int _dni){
             this.nombre=_nombre;
             this.dni=_dni;
+            this.compara=new Estrategia_DNI(this);
         }
         //encampusamiento
         public string getNombre{
             get{return nombre;}
         }
-        public int getDNI{
-            get{return dni;}
+        public int getDNI(){
+            return this.dni;
         }
 
         //metodos
         public override string ToString()
         {
-            return "Nombre: "+this.getNombre+" \n DNI: "+this.getDNI;
+            return "Nombre: "+this.getNombre+" \n DNI: "+this.getDNI();
         }
         public virtual bool sosIgual(Comparable comparable){
-            Persona _persona=(Persona)comparable;
-            if (this.dni==_persona.dni)
-            {
-                return true;   
-            }else{
-                return false;
-            }
+            return this.compara.sosIgual(comparable);
+           
         }
         public virtual bool sosMayor(Comparable comparable){
-            Persona _persona=(Persona)comparable;
-            if (_persona.dni<this.dni)
-            {
-                return true;
-            }else
-            {
-                return false;
-            }
+            return this.compara.sosMayor(comparable);
+            
         }
         public virtual bool sosMenor(Comparable comparable){
-            Persona _persona=(Persona)comparable;
-            if (_persona.dni>this.dni)
-            {   
-                return true;
-            }else
-            {
-                return false;
-            }
+            
+            return this.compara.sosMenor(comparable);
+        
         }
         
         

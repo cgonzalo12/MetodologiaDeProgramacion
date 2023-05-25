@@ -7,9 +7,7 @@ namespace Clase1
 {
     public interface EstrategiaAlumno
     {
-        Alumno comparacion(Alumno alum1,Alumno alum2);
-
-        int datoComparacion(Alumno alum);
+        int datoComparacion(IAlumno alum);
 
     }
 }
